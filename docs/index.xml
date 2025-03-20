@@ -5,16 +5,16 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title>R for a Jour Fixe</title>
-<link>https://nikotinz.github.io/JourFixe/</link>
-<atom:link href="https://nikotinz.github.io/JourFixe/index.xml" rel="self" type="application/rss+xml"/>
+<title>Jour Fixe R Sessions</title>
+<link>https://jourfixe.github.io/</link>
+<atom:link href="https://jourfixe.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Thu, 13 Mar 2025 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 20 Mar 2025 00:00:00 GMT</lastBuildDate>
 <item>
   <title>R tips March 2025</title>
   <dc:creator>Nikita M.</dc:creator>
-  <link>https://nikotinz.github.io/JourFixe/posts/March_2025/March2025.html</link>
+  <link>https://jourfixe.github.io/posts/March_2025/March2025.html</link>
   <description><![CDATA[ 
 
 
@@ -615,13 +615,13 @@ font-style: inherit;">print</span>(p_values)</span></code></pre></div>
 
  ]]></description>
   <category>R-tips</category>
-  <guid>https://nikotinz.github.io/JourFixe/posts/March_2025/March2025.html</guid>
-  <pubDate>Thu, 13 Mar 2025 00:00:00 GMT</pubDate>
+  <guid>https://jourfixe.github.io/posts/March_2025/March2025.html</guid>
+  <pubDate>Thu, 20 Mar 2025 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Running R Computational Tasks</title>
   <dc:creator>Nikita M.</dc:creator>
-  <link>https://nikotinz.github.io/JourFixe/posts/August_2024/August2024.html</link>
+  <link>https://jourfixe.github.io/posts/August_2024/August2024.html</link>
   <description><![CDATA[ 
 
 
@@ -636,7 +636,7 @@ font-style: inherit;">print</span>(p_values)</span></code></pre></div>
 <p>Efficient execution of computational tasks ensures that R processes run without blocking user interaction, effectively utilising system resources. The pyramid below illustrates the layers of computational efficiency in R programming.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://nikotinz.github.io/JourFixe/posts/August_2024/media/pyramid.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<p><img src="https://jourfixe.github.io/posts/August_2024/media/pyramid.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
 <p><a href="https://github.com/selinaZitrone/tools_and_tips/">Source: Selina Baldauf</a></p>
@@ -764,7 +764,7 @@ font-style: inherit;">"</span>)</span></code></pre></div>
 </div><div class="column" style="width:40%;">
 <section id="section" class="level4">
 <h4 class="anchored" data-anchor-id="section"></h4>
-<p><a href="media/bg_job_settings.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://nikotinz.github.io/JourFixe/posts/August_2024/media/bg_job_settings.png" class="img-fluid"></a></p>
+<p><a href="media/bg_job_settings.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://jourfixe.github.io/posts/August_2024/media/bg_job_settings.png" class="img-fluid"></a></p>
 </section>
 </div>
 </div>
@@ -783,7 +783,7 @@ font-style: inherit;">"</span>)</span></code></pre></div>
 <h2 class="anchored" data-anchor-id="responsible-use-of-resources">Responsible Use of Resources</h2>
 <p>It’s crucial to balance computational demand to prevent overloading shared servers.</p>
 <p><strong>Example:</strong> Most non-HPC servers allow to run small to medium-sized tasks, so large-scale simulations should be managed carefully.</p>
-<p><a href="media/overloaded.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="https://nikotinz.github.io/JourFixe/posts/August_2024/media/overloaded.jpg" class="img-fluid" width="1100"></a></p>
+<p><a href="media/overloaded.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="https://jourfixe.github.io/posts/August_2024/media/overloaded.jpg" class="img-fluid" width="1100"></a></p>
 <p><strong>Best Practice:</strong></p>
 <ul>
 <li><p>Use resource monitoring tools (<code>top</code>, <code>htop</code>) to check CPU usage before launching intensive computations.</p></li>
@@ -904,7 +904,7 @@ font-style: inherit;">30</span>)</span>
 <li><code>profvis()</code> visualises where time is spent in an R script.</li>
 <li>Helps identify slow functions and optimise code for better efficiency.</li>
 </ul>
-<p><a href="media/profvis.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="https://nikotinz.github.io/JourFixe/posts/August_2024/media/profvis.png" class="img-fluid"></a></p>
+<p><a href="media/profvis.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="https://jourfixe.github.io/posts/August_2024/media/profvis.png" class="img-fluid"></a></p>
 <hr>
 </section>
 </section>
@@ -1186,7 +1186,7 @@ font-style: inherit;">stopCluster</span>(cl)</span></code></pre></div>
 
  ]]></description>
   <category>R-tips</category>
-  <guid>https://nikotinz.github.io/JourFixe/posts/August_2024/August2024.html</guid>
+  <guid>https://jourfixe.github.io/posts/August_2024/August2024.html</guid>
   <pubDate>Wed, 21 Aug 2024 23:00:00 GMT</pubDate>
 </item>
 </channel>
