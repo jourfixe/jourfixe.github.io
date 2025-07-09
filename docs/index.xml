@@ -10,7 +10,307 @@
 <atom:link href="https://jourfixe.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Thu, 20 Mar 2025 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 09 Jul 2025 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>I’m just browsing</title>
+  <dc:creator>Nikita M.</dc:creator>
+  <link>https://jourfixe.github.io/posts/July_2025/July_2025.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="debugging-in-r-practical-tools-and-techniques" class="level1">
+<h1>Debugging in R: Practical Tools and Techniques</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Debugging is essential in programming for identifying and resolving errors effectively. Good debugging skills enhance productivity and ensure code reliability.</p>
+<p><strong>Topics Covered:</strong></p>
+<ul>
+<li><code>browser()</code></li>
+<li><code>debugonce()</code></li>
+<li><code>traceback()</code></li>
+<li><code>recover()</code></li>
+<li>Debugging Shiny applications</li>
+</ul>
+<hr>
+</section>
+<section id="the-browser-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-browser-function">The <code>browser()</code> Function</h2>
+<p><strong>Purpose:</strong> Pauses execution, allowing interactive inspection.</p>
+<p><strong>Example:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">my_function <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(x) {</span>
+<span id="cb1-2">    y <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> x <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span></span>
+<span id="cb1-3">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">browser</span>()</span>
+<span id="cb1-4">    z <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> y <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb1-5">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">return</span>(z)</span>
+<span id="cb1-6">}</span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">my_function</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span></code></pre></div>
+</div>
+<p><strong>How to use:</strong></p>
+<ul>
+<li>Inspect variables directly.</li>
+<li>Step through code (<code>n</code> for next, <code>c</code> to continue).</li>
+</ul>
+<hr>
+</section>
+<section id="the-debugonce-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-debugonce-function">The <code>debugonce()</code> Function</h2>
+<p><strong>Purpose:</strong> Debugs a function exactly once.</p>
+<p><strong>Example:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">add_numbers <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(a, b) {</span>
+<span id="cb2-2">    sum <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> a <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b</span>
+<span id="cb2-3">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">return</span>(sum)</span>
+<span id="cb2-4">}</span>
+<span id="cb2-5"></span>
+<span id="cb2-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">debugonce</span>(add_numbers)</span>
+<span id="cb2-7"></span>
+<span id="cb2-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">add_numbers</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"two"</span>)</span></code></pre></div>
+</div>
+<p><strong>How to use:</strong></p>
+<ul>
+<li>Automatically enters debug mode at next call.</li>
+<li>Useful for inspecting unexpected errors inside functions.</li>
+</ul>
+<hr>
+</section>
+<section id="the-traceback-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-traceback-function">The <code>traceback()</code> Function</h2>
+<p><strong>Purpose:</strong> Identifies the call sequence leading to an error.</p>
+<p><strong>Example:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">func_a <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>() { <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">func_b</span>() }</span>
+<span id="cb3-2">func_b <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>() { <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">stop</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"An error occurred!"</span>) }</span>
+<span id="cb3-3"></span>
+<span id="cb3-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">func_a</span>()</span>
+<span id="cb3-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">traceback</span>()</span></code></pre></div>
+</div>
+<p><strong>How to use:</strong></p>
+<ul>
+<li>Quickly identifies problematic calls.</li>
+<li>Ideal for debugging nested functions.</li>
+</ul>
+<hr>
+</section>
+<section id="the-recover-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-recover-function">The <code>recover()</code> Function</h2>
+<p><strong>Purpose:</strong> Interactive debugging at the moment an error occurs.</p>
+<p>Set this first:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">options</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">error =</span> recover)</span>
+<span id="cb4-2"></span>
+<span id="cb4-3">f1 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(x) { <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">f2</span>(x) }</span>
+<span id="cb4-4">f2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(x) { <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">f3</span>(x) }</span>
+<span id="cb4-5">f3 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(x) { <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">stop</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Unexpected error!"</span>) }</span>
+<span id="cb4-6"></span>
+<span id="cb4-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">f1</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>)</span></code></pre></div>
+</div>
+<p><strong>How to use:</strong></p>
+<ul>
+<li>Provides menu to enter error environments.</li>
+<li>Inspect variables interactively.</li>
+</ul>
+<hr>
+</section>
+<section id="debugging-shiny-applications" class="level2">
+<h2 class="anchored" data-anchor-id="debugging-shiny-applications">Debugging Shiny Applications</h2>
+<p>Debugging Shiny can be challenging. Key approaches include:</p>
+<ul>
+<li>Use <code>browser()</code> in reactive contexts:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(shiny)</span>
+<span id="cb5-2"></span>
+<span id="cb5-3">ui <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fluidPage</span>(</span>
+<span id="cb5-4">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">numericInput</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"num"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number:"</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>),</span>
+<span id="cb5-5">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">textOutput</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"result"</span>)</span>
+<span id="cb5-6">)</span>
+<span id="cb5-7"></span>
+<span id="cb5-8">server <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(input, output) {</span>
+<span id="cb5-9">    output<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>result <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">renderText</span>({</span>
+<span id="cb5-10">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">browser</span>()</span>
+<span id="cb5-11">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">paste</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Double:"</span>, input<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>num <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb5-12">    })</span>
+<span id="cb5-13">}</span>
+<span id="cb5-14"></span>
+<span id="cb5-15"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">shinyApp</span>(ui, server)</span></code></pre></div>
+</div>
+<ul>
+<li>Monitor logs and console outputs.</li>
+</ul>
+<hr>
+</section>
+<section id="summary-key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="summary-key-takeaways">Summary: Key Takeaways</h2>
+<ul>
+<li><code>browser()</code> - Interactive inspection.</li>
+<li><code>debugonce()</code> - Single-use debugging.</li>
+<li><code>traceback()</code> - Error call sequence.</li>
+<li><code>recover()</code> - Interactive error handling.</li>
+<li>Shiny apps - Combine <code>browser()</code>, logging, and output checks.</li>
+</ul>
+<p>Effective debugging greatly enhances coding efficiency and reliability.</p>
+<hr>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Debugging">R Debugging manual – CRAN</a></li>
+<li><a href="https://adv-r.hadley.nz/debugging.html">Advanced R: Debugging R code</a></li>
+<li><a href="https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio">RStudio: Debugging tools</a></li>
+<li><a href="https://shiny.rstudio.com/articles/debugging.html">Shiny – Debugging guide</a></li>
+</ul>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>R-tips</category>
+  <guid>https://jourfixe.github.io/posts/July_2025/July_2025.html</guid>
+  <pubDate>Wed, 09 Jul 2025 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>R tips March 2025</title>
   <dc:creator>Nikita M.</dc:creator>

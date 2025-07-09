@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Nikita M.">
+<meta name="dcterms.date" content="2025-07-10">
+<meta name="description" content="A practical, hands-on introduction to debugging in R. We explore core tools (browser(), debugonce(), traceback(), recover()) and demonstrate how to apply them in both scripts and Shiny applications, with live examples and step-by-step guidance to streamline your workflow.">
 
-<title>Jour Fixe R Sessions</title>
+<title>I’m just browsing – Jour Fixe R Sessions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +23,59 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,68 +103,10 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Jour Fixe R Sessions" href="index.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../styles.css">
+</head>
 
 <body class="nav-fixed">
 
@@ -138,7 +115,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Jour Fixe R Sessions</span>
     </a>
   </div>
@@ -149,11 +126,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -164,128 +141,219 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="R-tips">R-tips <span class="quarto-category-count">(3)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#debugging-in-r-practical-tools-and-techniques" id="toc-debugging-in-r-practical-tools-and-techniques" class="nav-link active" data-scroll-target="#debugging-in-r-practical-tools-and-techniques">Debugging in R: Practical Tools and Techniques</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#the-browser-function" id="toc-the-browser-function" class="nav-link" data-scroll-target="#the-browser-function">The <code>browser()</code> Function</a></li>
+  <li><a href="#the-debugonce-function" id="toc-the-debugonce-function" class="nav-link" data-scroll-target="#the-debugonce-function">The <code>debugonce()</code> Function</a></li>
+  <li><a href="#the-traceback-function" id="toc-the-traceback-function" class="nav-link" data-scroll-target="#the-traceback-function">The <code>traceback()</code> Function</a></li>
+  <li><a href="#the-recover-function" id="toc-the-recover-function" class="nav-link" data-scroll-target="#the-recover-function">The <code>recover()</code> Function</a></li>
+  <li><a href="#debugging-shiny-applications" id="toc-debugging-shiny-applications" class="nav-link" data-scroll-target="#debugging-shiny-applications">Debugging Shiny Applications</a></li>
+  <li><a href="#summary-key-takeaways" id="toc-summary-key-takeaways" class="nav-link" data-scroll-target="#summary-key-takeaways">Summary: Key Takeaways</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">I’m just browsing</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">R-tips</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A practical, hands-on introduction to debugging in R. We explore core tools (browser(), debugonce(), traceback(), recover()) and demonstrate how to apply them in both scripts and Shiny applications, with live examples and step-by-step guidance to streamline your workflow.
+  </div>
+</div>
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nikita M. </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 10, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
 
 
+</header>
 
 
+<section id="debugging-in-r-practical-tools-and-techniques" class="level1">
+<h1>Debugging in R: Practical Tools and Techniques</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Debugging is essential in programming for identifying and resolving errors effectively. Good debugging skills enhance productivity and ensure code reliability.</p>
+<p><strong>Topics Covered:</strong></p>
+<ul>
+<li><code>browser()</code></li>
+<li><code>debugonce()</code></li>
+<li><code>traceback()</code></li>
+<li><code>recover()</code></li>
+<li>Debugging Shiny applications</li>
+</ul>
+<hr>
+</section>
+<section id="the-browser-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-browser-function">The <code>browser()</code> Function</h2>
+<p><strong>Purpose:</strong> Pauses execution, allowing interactive inspection.</p>
+<p><strong>Example:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>my_function <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">10</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">browser</span>()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    z <span class="ot">&lt;-</span> y <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(z)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">my_function</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>How to use:</strong></p>
+<ul>
+<li>Inspect variables directly.</li>
+<li>Step through code (<code>n</code> for next, <code>c</code> to continue).</li>
+</ul>
+<hr>
+</section>
+<section id="the-debugonce-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-debugonce-function">The <code>debugonce()</code> Function</h2>
+<p><strong>Purpose:</strong> Debugs a function exactly once.</p>
+<p><strong>Example:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>add_numbers <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    sum <span class="ot">&lt;-</span> a <span class="sc">+</span> b</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(sum)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">debugonce</span>(add_numbers)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">add_numbers</span>(<span class="dv">3</span>, <span class="st">"two"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>How to use:</strong></p>
+<ul>
+<li>Automatically enters debug mode at next call.</li>
+<li>Useful for inspecting unexpected errors inside functions.</li>
+</ul>
+<hr>
+</section>
+<section id="the-traceback-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-traceback-function">The <code>traceback()</code> Function</h2>
+<p><strong>Purpose:</strong> Identifies the call sequence leading to an error.</p>
+<p><strong>Example:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>func_a <span class="ot">&lt;-</span> <span class="cf">function</span>() { <span class="fu">func_b</span>() }</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>func_b <span class="ot">&lt;-</span> <span class="cf">function</span>() { <span class="fu">stop</span>(<span class="st">"An error occurred!"</span>) }</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">func_a</span>()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">traceback</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>How to use:</strong></p>
+<ul>
+<li>Quickly identifies problematic calls.</li>
+<li>Ideal for debugging nested functions.</li>
+</ul>
+<hr>
+</section>
+<section id="the-recover-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-recover-function">The <code>recover()</code> Function</h2>
+<p><strong>Purpose:</strong> Interactive debugging at the moment an error occurs.</p>
+<p>Set this first:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">error =</span> recover)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>f1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { <span class="fu">f2</span>(x) }</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>f2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { <span class="fu">f3</span>(x) }</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>f3 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) { <span class="fu">stop</span>(<span class="st">"Unexpected error!"</span>) }</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">f1</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>How to use:</strong></p>
+<ul>
+<li>Provides menu to enter error environments.</li>
+<li>Inspect variables interactively.</li>
+</ul>
+<hr>
+</section>
+<section id="debugging-shiny-applications" class="level2">
+<h2 class="anchored" data-anchor-id="debugging-shiny-applications">Debugging Shiny Applications</h2>
+<p>Debugging Shiny can be challenging. Key approaches include:</p>
+<ul>
+<li>Use <code>browser()</code> in reactive contexts:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">numericInput</span>(<span class="st">"num"</span>, <span class="st">"Number:"</span>, <span class="dv">10</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">textOutput</span>(<span class="st">"result"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>result <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">browser</span>()</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">paste</span>(<span class="st">"Double:"</span>, input<span class="sc">$</span>num <span class="sc">*</span> <span class="dv">2</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Monitor logs and console outputs.</li>
+</ul>
+<hr>
+</section>
+<section id="summary-key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="summary-key-takeaways">Summary: Key Takeaways</h2>
+<ul>
+<li><code>browser()</code> - Interactive inspection.</li>
+<li><code>debugonce()</code> - Single-use debugging.</li>
+<li><code>traceback()</code> - Error call sequence.</li>
+<li><code>recover()</code> - Interactive error handling.</li>
+<li>Shiny apps - Combine <code>browser()</code>, logging, and output checks.</li>
+</ul>
+<p>Effective debugging greatly enhances coding efficiency and reliability.</p>
+<hr>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Debugging">R Debugging manual – CRAN</a></li>
+<li><a href="https://adv-r.hadley.nz/debugging.html">Advanced R: Debugging R code</a></li>
+<li><a href="https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio">RStudio: Debugging tools</a></li>
+<li><a href="https://shiny.rstudio.com/articles/debugging.html">Shiny – Debugging guide</a></li>
+</ul>
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="R-tips" data-listing-date-sort="1752102000000" data-listing-file-modified-sort="1752053532273" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="321">
-<div class="thumbnail">
-<p><a href="./posts/July_2025/July_2025.html" class="no-external"></a></p><a href="./posts/July_2025/July_2025.html" class="no-external">
-<p class="card-img-top"><img src="assets/images/favicon.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/July_2025/July_2025.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/July_2025/July_2025.html" class="no-external">I’m just browsing</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/July_2025/July_2025.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R-tips'); return false;">
-R-tips
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/July_2025/July_2025.html" class="no-external">A practical, hands-on introduction to debugging in R. We explore core tools (browser(), debugonce(), traceback(), recover()) and demonstrate how to apply them in both scripts and Shiny applications, with live examples and step-by-step guidance to streamline your workflow.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/July_2025/July_2025.html" class="no-external">
-<div class="listing-date">
-Jul 10, 2025
-</div>
-<div class="listing-author">
-Nikita M.
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="R-tips" data-listing-date-sort="1742428800000" data-listing-file-modified-sort="1742461419993" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1028">
-<div class="thumbnail">
-<p><a href="./posts/March_2025/March2025.html" class="no-external"></a></p><a href="./posts/March_2025/March2025.html" class="no-external">
-<p class="card-img-top"><img src="assets/images/favicon.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/March_2025/March2025.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/March_2025/March2025.html" class="no-external">R tips March 2025</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/March_2025/March2025.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R-tips'); return false;">
-R-tips
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/March_2025/March2025.html" class="no-external">Exploring floating-point precision, memory allocation, and partial matching in R; insights and explanations of the common pitfalls in coding.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/March_2025/March2025.html" class="no-external">
-<div class="listing-date">
-Mar 20, 2025
-</div>
-<div class="listing-author">
-Nikita M.
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="R-tips" data-listing-date-sort="1724281200000" data-listing-file-modified-sort="1742421269673" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1011">
-<div class="thumbnail">
-<p><a href="./posts/August_2024/August2024.html" class="no-external"></a></p><a href="./posts/August_2024/August2024.html" class="no-external">
-<p class="card-img-top"><img src="posts\August_2024\media\pyramid.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/August_2024/August2024.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/August_2024/August2024.html" class="no-external">Running R Computational Tasks</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/August_2024/August2024.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R-tips'); return false;">
-R-tips
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/August_2024/August2024.html" class="no-external">Exploring efficient ways to run computational tasks in R, from background jobs to profiling, debugging, and parallelisation, with practical tips and examples.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/August_2024/August2024.html" class="no-external">
-<div class="listing-date">
-Aug 22, 2024
-</div>
-<div class="listing-author">
-Nikita M.
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
