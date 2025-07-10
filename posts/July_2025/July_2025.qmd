@@ -1,5 +1,5 @@
 ---
-title: "I'm just browsing"
+title: "R tips July 2025"
 description: "A practical, hands-on introduction to debugging in R. We explore core tools (browser(), debugonce(), traceback(), recover()) and demonstrate how to apply them in both scripts and Shiny applications, with live examples and step-by-step guidance to streamline your workflow."
 author: "Nikita M."
 format:
@@ -21,13 +21,13 @@ Debugging is essential in programming for identifying and resolving errors effec
 
 **Topics Covered:**
 
-- `browser()`
-- `debugonce()`
-- `traceback()`
-- `recover()`
-- Debugging Shiny applications
+-   `browser()`
+-   `debugonce()`
+-   `traceback()`
+-   `recover()`
+-   Debugging Shiny applications
 
----
+------------------------------------------------------------------------
 
 ## The `browser()` Function
 
@@ -48,10 +48,10 @@ my_function(5)
 
 **How to use:**
 
-- Inspect variables directly.
-- Step through code (`n` for next, `c` to continue).
+-   Inspect variables directly.
+-   Step through code (`n` for next, `c` to continue).
 
----
+------------------------------------------------------------------------
 
 ## The `debugonce()` Function
 
@@ -72,10 +72,10 @@ add_numbers(3, "two")
 
 **How to use:**
 
-- Automatically enters debug mode at next call.
-- Useful for inspecting unexpected errors inside functions.
+-   Automatically enters debug mode at next call.
+-   Useful for inspecting unexpected errors inside functions.
 
----
+------------------------------------------------------------------------
 
 ## The `traceback()` Function
 
@@ -93,10 +93,10 @@ traceback()
 
 **How to use:**
 
-- Quickly identifies problematic calls.
-- Ideal for debugging nested functions.
+-   Quickly identifies problematic calls.
+-   Ideal for debugging nested functions.
 
----
+------------------------------------------------------------------------
 
 ## The `recover()` Function
 
@@ -116,16 +116,16 @@ f1(10)
 
 **How to use:**
 
-- Provides menu to enter error environments.
-- Inspect variables interactively.
+-   Provides menu to enter error environments.
+-   Inspect variables interactively.
 
----
+------------------------------------------------------------------------
 
 ## Debugging Shiny Applications
 
 Debugging Shiny can be challenging. Key approaches include:
 
-- Use `browser()` in reactive contexts:
+-   Use `browser()` in reactive contexts:
 
 ```{r, eval=FALSE}
 library(shiny)
@@ -145,27 +145,25 @@ server <- function(input, output) {
 shinyApp(ui, server)
 ```
 
-- Monitor logs and console outputs.
+-   Monitor logs and console outputs.
 
----
+------------------------------------------------------------------------
 
 ## Summary: Key Takeaways
 
-- `browser()` - Interactive inspection.
-- `debugonce()` - Single-use debugging.
-- `traceback()` - Error call sequence.
-- `recover()` - Interactive error handling.
-- Shiny apps - Combine `browser()`, logging, and output checks.
+-   `browser()` - Interactive inspection.
+-   `debugonce()` - Single-use debugging.
+-   `traceback()` - Error call sequence.
+-   `recover()` - Interactive error handling.
+-   Shiny apps - Combine `browser()`, logging, and output checks.
 
 Effective debugging greatly enhances coding efficiency and reliability.
 
----
+------------------------------------------------------------------------
 
 ## References
 
-- [R Debugging manual – CRAN](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Debugging)
-- [Advanced R: Debugging R code](https://adv-r.hadley.nz/debugging.html)
-- [RStudio: Debugging tools](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio)
-- [Shiny – Debugging guide](https://shiny.rstudio.com/articles/debugging.html)
-
-
+-   [R Debugging manual – CRAN](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Debugging)
+-   [Advanced R: Debugging R code](https://adv-r.hadley.nz/debugging.html)
+-   [RStudio: Debugging tools](https://support.rstudio.com/hc/en-us/articles/205612627-Debugging-with-RStudio)
+-   [Shiny – Debugging guide](https://shiny.rstudio.com/articles/debugging.html)
